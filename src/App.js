@@ -3,6 +3,7 @@ import './App.css';
 import {Home} from './Home';
 import {Department} from './Department';
 import {Employee} from './Employee';
+import {Medicines} from './Medicines';
 import {BrowserRouter, Route,Routes, NavLink} from 'react-router-dom';
 
 function App() {
@@ -10,7 +11,7 @@ function App() {
     <BrowserRouter>
     <div className="App container">
       <h3 className='d-flex justify-content-center m-3'>
-        React JS Frontend
+        Pharmacy Management System
       </h3>
 
       <nav className='navbar navbar-expand-sm bg-light navbar-dark'>
@@ -19,11 +20,14 @@ function App() {
             <NavLink className="btn btn-light  btn-outline-primary" to="/home" >
               Home
             </NavLink>
-            <NavLink className="btn btn-light  btn-outline-primary" to="/department" >
+            {/* <NavLink className="btn btn-light  btn-outline-primary" to="/department" >
               Department
-            </NavLink>
+            </NavLink> */}
             <NavLink className="btn btn-light  btn-outline-primary" to="/employee" >
               Employee
+            </NavLink>
+            <NavLink className="btn btn-light  btn-outline-primary" to="/medicines" >
+              Medicines
             </NavLink>
           </li>
 
@@ -34,8 +38,9 @@ function App() {
       <Routes>
         {/* <Route path='/home' component={Home}/> */}
         <Route path="/home" element={<Home/>} />
-        <Route path="/department" element={<Department/>} />
+        {/* <Route path="/department" element={<Department/>} /> */}
         <Route path="/employee" element={<Employee/>} />
+        <Route path="/medicines" element={<Medicines/>} />
         
       </Routes>
       
