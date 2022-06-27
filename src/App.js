@@ -20,9 +20,9 @@ function App() {
             <NavLink className="btn btn-light  btn-outline-primary" to="/home" >
               Home
             </NavLink>
-            {/* <NavLink className="btn btn-light  btn-outline-primary" to="/department" >
+            <NavLink className="btn btn-light  btn-outline-primary" to="/department" >
               Department
-            </NavLink> */}
+            </NavLink>
             <NavLink className="btn btn-light  btn-outline-primary" to="/employee" >
               Employee
             </NavLink>
@@ -38,7 +38,7 @@ function App() {
       <Routes>
         {/* <Route path='/home' component={Home}/> */}
         <Route path="/home" element={<Home/>} />
-        {/* <Route path="/department" element={<Department/>} /> */}
+        <Route path="/department" element={<Department/>} />
         <Route path="/employee" element={<Employee/>} />
         <Route path="/medicines" element={<Medicines/>} />
         
