@@ -5,7 +5,7 @@ export class Home extends Component{
         return(
             <div>
         <h3>
-            This is Homepage VInay
+            This is Homepage
         </h3>
         </div>
         )
