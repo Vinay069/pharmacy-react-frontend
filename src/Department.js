@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import {variables} from './Variables.js';
+import Navbar from './components/Navbar.js';
+
 
 export class Department extends Component{
 
@@ -161,8 +163,10 @@ export class Department extends Component{
         }=this.state;
 
         return(
+            
 <div>
-
+            
+            <Navbar/>
     <button type="button"
     className="btn btn-primary m-2 float-end"
     data-bs-toggle="modal"

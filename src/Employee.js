@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {variables} from './Variables.js';
+import Navbar from './components/Navbar.js';
 
 export class Employee extends Component{
 
@@ -166,8 +167,10 @@ export class Employee extends Component{
         }=this.state;
 
         return(
-<div>
 
+            
+<div>
+    <Navbar/>
     <button type="button"
     className="btn btn-primary m-2 float-end"
     data-bs-toggle="modal"
