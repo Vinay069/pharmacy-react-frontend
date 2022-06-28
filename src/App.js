@@ -16,7 +16,7 @@ function App() {
         Pharmacy Management System
       </h3>
 
-      <nav className='navbar navbar-expand-sm bg-light navbar-dark'>
+      {/* <nav className='navbar navbar-expand-sm bg-light navbar-dark'>
         <ul className='navbar-nav'>
           <li className='nav-item m-1'>
             <NavLink className="btn btn-light  btn-outline-primary" to="/home" >
@@ -35,7 +35,7 @@ function App() {
 
         </ul>
 
-      </nav>
+      </nav> */}
 
       <Routes>
         {/* <Route path='/home' component={Home}/> */}
