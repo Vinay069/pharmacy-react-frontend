@@ -5,6 +5,8 @@ import {Department} from './Department';
 import {Employee} from './Employee';
 import {Medicines} from './Medicines';
 import {BrowserRouter, Route,Routes, NavLink} from 'react-router-dom';
+import SignUp from './components/SignUp'
+import SignIn from './components/SignIn'
 
 function App() {
   return (
@@ -37,10 +39,12 @@ function App() {
 
       <Routes>
         {/* <Route path='/home' component={Home}/> */}
+        <Route path="/" element={<SignUp/>} />
         <Route path="/home" element={<Home/>} />
         <Route path="/department" element={<Department/>} />
         <Route path="/employee" element={<Employee/>} />
         <Route path="/medicines" element={<Medicines/>} />
+        <Route path="/signin" element={<SignIn/>} />
         
       </Routes>
       
