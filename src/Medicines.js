@@ -1,5 +1,6 @@
 import React,{Component} from 'react';
 import {variables} from './Variables.js';
+import Navbar from './components/Navbar.js';
 
 export class Medicines extends Component{
 
@@ -175,6 +176,7 @@ export class Medicines extends Component{
 
         return(
 <div>
+<Navbar/>
 
     <button type="button"
     className="btn btn-primary m-2 float-end"
