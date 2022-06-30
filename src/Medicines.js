@@ -8,64 +8,25 @@ export class Medicines extends Component{
 
         this.state={
             medicines:[],
-            //variables for modal window
             modalTitle:"",
-            MedicineName:"",
             MedicineId:0,
-
-            MedicineIdFilter:"",
-            MedicineNameFilter:"",
-            medicinesWithoutFilter:[]
+            MedicineName:"",
+            DateOfManufacture:"",
+            DateOfExpiry:"",
+            MedicineQuantity:"",
+            MedicinePricePerUnit:"",
         }
     }
 
-    FilterFn(){
-        var MedicineIdFilter=this.state.MedicineIdFilter;
-        var MedicineNameFilter = this.state.MedicineNameFilter;
-
-        var filteredData=this.state.medicinesWithoutFilter.filter(
-            function(el){
-                return el.MedicineId.toString().toLowerCase().includes(
-                    MedicineIdFilter.toString().trim().toLowerCase()
-                )&&
-                el.MedicineName.toString().toLowerCase().includes(
-                    MedicineNameFilter.toString().trim().toLowerCase()
-                )
-            }
-        );
-
-        this.setState({medicines:filteredData});
-
-    }
-
-    sortResult(prop,asc){
-        var sortedData=this.state.medicinesWithoutFilter.sort(function(a,b){
-            if(asc){
-                return (a[prop]>b[prop])?1:((a[prop]<b[prop])?-1:0);
-            }
-            else{
-                return (b[prop]>a[prop])?1:((b[prop]<a[prop])?-1:0);
-            }
-        });
-
-        this.setState({medicines:sortedData});
-    }
-
-    changeMedicineIdFilter = (e)=>{
-        this.state.MedicineIdFilter=e.target.value;
-        this.FilterFn();
-    }
-    changeMedicineNameFilter = (e)=>{
-        this.state.MedicineNameFilter=e.target.value;
-        this.FilterFn();
-    }
-
     refreshList(){
+
         fetch(variables.API_URL+'medicines')
         .then(response=>response.json())
         .then(data=>{
-            this.setState({medicines:data,medicinesWithoutFilter:data});
+            this.setState({medicines:data});
         });
+
+        
     }
 
     componentDidMount(){
@@ -75,19 +36,42 @@ export class Medicines extends Component{
     changeMedicineName =(e)=>{
         this.setState({MedicineName:e.target.value});
     }
+    changeDateOfManufacture =(e)=>{
+        this.setState({DateOfManufacture:e.target.value});
+    }
+    changeDateOfExpiry =(e)=>{
+        this.setState({DateOfExpiry:e.target.value});
+    }
+    changeMedicineQuantity =(e)=>{
+        this.setState({MedicineQuantity:e.target.value});
+    }
+    changeMedicinePricePerUnit =(e)=>{
+        this.setState({MedicinePricePerUnit:e.target.value});
+    }
+
 
     addClick(){
         this.setState({
-            modalTitle:"Add Medicine",
+            modalTitle:"Add Medicines",
             MedicineId:0,
-            MedicineName:""
+            MedicineName:"",
+            DateOfManufacture:"",
+            DateOfExpiry:"",
+            MedicineQuantity:"",
+            MedicinePricePerUnit:"",
+            
         });
     }
     editClick(med){
         this.setState({
-            modalTitle:"Edit Medicine",
+            modalTitle:"Edit Medicines",
             MedicineId:med.MedicineId,
-            MedicineName:med.MedicineName
+            MedicineName:med.EmployeeName,
+            DateOfManufacture:med.DateOfManufacture,
+            DateOfExpiry:med.DateOfExpiry,
+            MedicineQuantity:med.MedicineQuantity,
+            MedicinePricePerUnit:med.MedicinePricePerUnit,
+            
         });
     }
 
@@ -99,7 +83,11 @@ export class Medicines extends Component{
                 'Content-Type':'application/json'
             },
             body:JSON.stringify({
-                MedicineName:this.state.MedicineName
+                MedicineName:this.state.MedicineName,
+                DateOfManufacture:this.state.DateOfManufacture,
+                DateOfExpiry:this.state.DateOfExpiry,
+                MedicineQuantity:this.state.MedicineQuantity,
+                MedicinePricePerUnit:this.state.MedicinePricePerUnit,
             })
         })
         .then(res=>res.json())
@@ -121,7 +109,12 @@ export class Medicines extends Component{
             },
             body:JSON.stringify({
                 MedicineId:this.state.MedicineId,
-                MedicineName:this.state.MedicineName
+                MedicineName:this.state.MedicineName,
+                DateOfManufacture:this.state.DateOfManufacture,
+                DateOfExpiry:this.state.DateOfExpiry,
+                MedicineQuantity:this.state.MedicineQuantity,
+                MedicinePricePerUnit:this.state.MedicinePricePerUnit,
+                
             })
         })
         .then(res=>res.json())
@@ -152,12 +145,32 @@ export class Medicines extends Component{
         }
     }
 
+    imageUpload=(e)=>{
+        e.preventDefault();
+
+        const formData=new FormData();
+        formData.append("file",e.target.files[0],e.target.files[0].name);
+
+        fetch(variables.API_URL+'medicine/savefile',{
+            method:'POST',
+            body:formData
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            this.setState({PhotoFileName:data});
+        })
+    }
+
     render(){
         const {
             medicines,
             modalTitle,
             MedicineId,
-            MedicineName
+            MedicineName,
+            DateOfManufacture,
+            DateOfExpiry,
+            MedicineQuantity,
+            MedicinePricePerUnit,
         }=this.state;
 
         return(
@@ -168,58 +181,28 @@ export class Medicines extends Component{
     data-bs-toggle="modal"
     data-bs-target="#exampleModal"
     onClick={()=>this.addClick()}>
-        Add Medicine
+        Add Medicines
     </button>
     <table className="table table-striped">
     <thead>
     <tr>
         <th>
-            <div className="d-flex flex-row">
-
-            
-            <input className="form-control m-2"
-            onChange={this.changeMedicineIdFilter}
-            placeholder="Filter"/>
-            
-            <button type="button" className="btn btn-light"
-            onClick={()=>this.sortResult('MedicineId',true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
-                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
-                </svg>
-            </button>
-
-            <button type="button" className="btn btn-light"
-            onClick={()=>this.sortResult('MedicineId',false)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
-                <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
-                </svg>
-            </button>
-
-            </div>
             MedicineId
         </th>
         <th>
-        <div className="d-flex flex-row">
-        <input className="form-control m-2"
-            onChange={this.changeMedicineNameFilter}
-            placeholder="Filter"/>
-
-            <button type="button" className="btn btn-light"
-            onClick={()=>this.sortResult('MedicineName',true)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
-                <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
-                </svg>
-            </button>
-
-            <button type="button" className="btn btn-light"
-            onClick={()=>this.sortResult('MedicineName',false)}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
-                <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
-                </svg>
-            </button>
-            </div>
             MedicineName
-      
+        </th>
+        <th>
+            DateOfManufacture
+        </th>
+        <th>
+            DateOfExpiry
+        </th>
+        <th>
+            MedicineQuantity
+        </th>
+        <th>
+            MedicinePricePerUnit
         </th>
         <th>
             Options
@@ -231,6 +214,10 @@ export class Medicines extends Component{
             <tr key={med.MedicineId}>
                 <td>{med.MedicineId}</td>
                 <td>{med.MedicineName}</td>
+                <td>{med.DateOfManufacture}</td>
+                <td>{med.DateOfExpiry}</td>
+                <td>{med.MedicineQuantity}</td>
+                <td>{med.MedicinePricePerUnit}</td>
                 <td>
                 <button type="button"
                 className="btn btn-light mr-1"
@@ -267,20 +254,55 @@ export class Medicines extends Component{
    </div>
 
    <div className="modal-body">
-       <div className="input-group mb-3">
-        <span className="input-group-text">MedicineName</span>
-        <input type="text" className="form-control"
-        value={MedicineName}
-        onChange={this.changeMedicineName}/>
-       </div>
+    <div className="d-flex flex-row bd-highlight mb-3">
+     
+     <div className="p-2 w-50 bd-highlight">
+    
+        <div className="input-group mb-3">
+            <span className="input-group-text">Med Name</span>
+            <input type="text" className="form-control"
+            value={MedicineName}
+            onChange={this.changeMedicineName}/>
+        </div>
+        <div className="input-group mb-3">
+            <span className="input-group-text">Date Of Manufacture</span>
+            <input type="date" className="form-control"
+            value={DateOfManufacture}
+            onChange={this.changeDateOfManufacture}/>
+        </div>
 
-        {MedicineId==0?
+        
+
+        <div className="input-group mb-3">
+            <span className="input-group-text">DOE</span>
+            <input type="date" className="form-control"
+            value={DateOfExpiry}
+            onChange={this.changeDateOfExpiry}/>
+        </div>
+        <div className="input-group mb-3">
+            <span className="input-group-text">Med Quantity</span>
+            <input type="text" className="form-control"
+            value={MedicineQuantity}
+            onChange={this.changeMedicineQuantity}/>
+        </div>
+        <div className="input-group mb-3">
+            <span className="input-group-text">Med PricePerUnit</span>
+            <input type="text" className="form-control"
+            value={MedicinePricePerUnit}
+            onChange={this.changeMedicinePricePerUnit}/>
+        </div>
+
+
+     </div>
+     
+    </div>
+
+    {MedicineId==0?
         <button type="button"
         className="btn btn-primary float-start"
         onClick={()=>this.createClick()}
         >Create</button>
         :null}
-        
 
         {MedicineId!=0?
         <button type="button"
@@ -288,7 +310,6 @@ export class Medicines extends Component{
         onClick={()=>this.updateClick()}
         >Update</button>
         :null}
-
    </div>
 
 </div>
