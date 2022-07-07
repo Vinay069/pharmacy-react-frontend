@@ -9,10 +9,10 @@ export default function navbar(){
             </NavLink>
             {/* <NavLink className="btn btn-light  btn-outline-primary" to="/department" >
               Department
-            </NavLink>
+            </NavLink>*/}
             <NavLink className="btn btn-light  btn-outline-primary" to="/employee" >
               Employee
-            </NavLink> */}
+            </NavLink> 
             <NavLink className="btn btn-light  btn-outline-primary" to="/medicines" >
               Medicines
             </NavLink>

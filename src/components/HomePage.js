@@ -13,6 +13,9 @@ export default class HomePage extends Component {
         }}
       >
         Welcome To HomePage
+        <h3>
+            This is Homepage
+        </h3>
       </div>
     )
   }

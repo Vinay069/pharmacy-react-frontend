@@ -50,7 +50,7 @@ export default class SignUp extends Component {
   };
 
   CheckValidity() {
-    console.log("CheckValidity Calling.....");
+    // console.log("CheckValidity Calling.....");
     //Reset Flag
     this.setState({
       UserNameFlag: false,
@@ -93,7 +93,7 @@ export default class SignUp extends Component {
               this.props.history.push("/SignIn");
             };
           } else {
-            console.log("Sign Up Failed");
+            // console.log("Sign Up Failed");
             this.setState({ open: true, Message: data.data.message });
           }
         })
@@ -102,7 +102,7 @@ export default class SignUp extends Component {
           this.setState({ open: true, Message: "Something Went Wrong" });
         });
     } else {
-      console.log("Not Acceptable");
+      // console.log("Not Acceptable");
       this.setState({ open: true, Message: "Something Went Wrong" });
     }
   };

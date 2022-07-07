@@ -65,7 +65,7 @@ export default class SignIn extends Component {
   handleSubmit = (e) => {
     this.CheckValidity();
     if (this.state.UserName !== "" && this.state.Password !== "") {
-      console.log("Acceptable");
+      // console.log("Acceptable");
       let data = {
         userName: this.state.UserName,
         password: this.state.Password,
@@ -79,7 +79,7 @@ export default class SignIn extends Component {
           console.log("data : ", data);
           if (data.data.IsSuccess) {
             this.handleSubmit = (e) => {
-              this.props.history.push("/HomePage");
+              this.props.history.push("/Home");
             };
           } else {
             console.log("Sign In Failed");
